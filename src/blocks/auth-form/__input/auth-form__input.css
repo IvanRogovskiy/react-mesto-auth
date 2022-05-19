@@ -1,0 +1,19 @@
+.auth-form__input {
+    border: none;
+    background-color: #000;
+    border-bottom: 2px solid #CCC;
+    width: 100%;
+    box-sizing: border-box;
+    padding-bottom: 13px;
+    margin-bottom: 30px;
+}
+
+.auth-form__input:last-of-type {
+    margin-bottom: 0;
+}
+
+.auth-form__input::placeholder {
+    color: #CCC;
+    font-weight: 400;
+    line-height: 17px;
+}

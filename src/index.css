@@ -66,3 +66,13 @@
 @import url(../src/blocks/popup/__input-error/_active/popup__input-error_active.css);
 @import url(../src/blocks/popup/__input/_type/popup__input_type_error.css);
 @import url(../src/blocks/popup/__save/_inactive/popup__save_inactive.css);
+
+@import url(../src/blocks/login-page/login-page.css);
+@import url(../src/blocks/login-page/__btn/login-page__btn.css);
+@import url(../src/blocks/login-page/__header/login-page__header.css);
+@import url(../src/blocks/auth-form/auth-form.css);
+@import url(../src/blocks/auth-form/__input/auth-form__input.css);
+
+@import url(../src/blocks/auth-main-container/auth-main-container.css);
+@import url(../src/blocks/auth-main-container/__title/auth-main-container__title.css);
+@import url(../src/blocks/auth-form/__submit/auth-form__submit.css);

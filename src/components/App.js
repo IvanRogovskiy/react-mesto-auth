@@ -1,19 +1,18 @@
 import '../App.css';
 import React from "react";
 import '../index.css'
-import Header from "./Header";
-import Main from "./Main";
-import Footer from "./Footer";
-import ImagePopup from "./ImagePopup";
 import api from '../utils/Api';
 import { CurrentUserContext } from '../contexts/currentUserContext';
-import EditProfilePopup from "./EditProfilePopup";
-import EditAvatarPopup from "./EditAvatarPopup";
-import AddPlacePopup from "./AddPlacePopup";
+import { Switch, Route } from 'react-router-dom';
+import PageContainer from './PageContainer';
+import ProtectedRoute from './ProtectedRoute';
+import Login from './Login';
 
 const App = () => {
 
     const [currentUser, setCurrentUser] = React.useState({});
+    const [isLoggedIn, setIsLoggedIn] = React.useState(true);
+
     const [cards, setCards] = React.useState([]);
 
     const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
@@ -135,36 +134,33 @@ const App = () => {
     }, [closeAllPopups])
 
   return (
-    <CurrentUserContext.Provider value={currentUser}>
-        <div className={'page-container'} onKeyPress={handleEscPress}>
-            <Header/>
-            <Main
-                onEditProfile={handleEditProfileClick}
-                onEditAvatar={handleEditAvatarClick}
-                onAddPlace={handleAddPlaceClick}
-                onCardClick={handleCardClick}
-                cards = {cards}
-                onCardLike={handleCardLike}
-                onCardDelete={handleCardDelete}
+    <CurrentUserContext.Provider value={{currentUser, isLoggedIn}}>
+        {/* <Switch>
+            <ProtectedRoute 
+                component={PageContainer}
+                handleEscPress={handleEscPress}
+                handleEditProfileClick={handleEditProfileClick}
+                handleEditAvatarClick={handleEditAvatarClick}
+                handleAddPlaceClick={handleAddPlaceClick}
+                handleCardClick={handleCardClick}
+                cards={cards}
+                handleUpdateUser={handleUpdateUser}
+                handleCardLike={handleCardLike}
+                handleCardDelete={handleCardDelete}
+                isAddPlacePopupOpen={isAddPlacePopupOpen}
+                closeAllPopups={closeAllPopups}
+                handlePlaceAdd={handlePlaceAdd}
+                isEditProfilePopupOpen={isEditProfilePopupOpen}
+                isEditAvatarPopupOpen={isEditAvatarPopupOpen}
+                handleUpdateAvatar={handleUpdateAvatar}
+                selectedCard={selectedCard}
+                loggedIn={true}
             />
-            <Footer/>
-            <AddPlacePopup
-                isOpened={isAddPlacePopupOpen}
-                onClose={closeAllPopups}
-                onAddPlace={handlePlaceAdd}
-            />
-            <EditProfilePopup
-                isOpened={isEditProfilePopupOpen}
-                onClose={closeAllPopups}
-                onUserUpdate={handleUpdateUser}
-            />
-            <EditAvatarPopup
-                isOpened={isEditAvatarPopupOpen}
-                onClose={closeAllPopups}
-                onAvatarUpdate={handleUpdateAvatar}
-            />
-            <ImagePopup selectedCard={selectedCard} onClose={closeAllPopups}/>
-        </div>
+            <Route path="/login">
+                <Login />
+            </Route>
+        </Switch> */}
+        <Login />
     </CurrentUserContext.Provider>
   );
 }
