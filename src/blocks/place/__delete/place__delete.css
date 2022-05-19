@@ -1,0 +1,12 @@
+.place__delete {
+    display: none;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    transition: opacity .3s;
+}
+
+.place__delete:hover {
+    opacity: .6;
+    cursor: pointer;
+}
