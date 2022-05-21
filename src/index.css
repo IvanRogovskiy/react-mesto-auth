@@ -81,4 +81,6 @@
 @import url(../src/blocks/auth-main-container/auth-main-container.css);
 @import url(../src/blocks/auth-main-container/__title/auth-main-container__title.css);
 
+@import url(../src/blocks/tooltip/tooltip.css);
 @import url(../src/blocks/tooltip/_type/tooltip_type_success.css);
+@import url(../src/blocks/tooltip/__message/tooltip__message.css);

@@ -3,7 +3,7 @@ import React from "react";
 import '../index.css'
 import api from '../utils/Api';
 import { CurrentUserContext } from '../contexts/currentUserContext';
-import { Switch, Route } from 'react-router-dom';
+import {Switch, Route, Redirect, BrowserRouter} from 'react-router-dom';
 import PageContainer from './PageContainer';
 import ProtectedRoute from './ProtectedRoute';
 import Login from './Login';
@@ -141,6 +141,8 @@ const App = () => {
         <Switch>
             <ProtectedRoute
                 component={PageContainer}
+                exact
+                path={"/"}
                 handleEscPress={handleEscPress}
                 handleEditProfileClick={handleEditProfileClick}
                 handleEditAvatarClick={handleEditAvatarClick}
@@ -159,13 +161,14 @@ const App = () => {
                 selectedCard={selectedCard}
                 loggedIn={true}
             />
-            <Route path="/login">
+            <Route path="/sign-in">
                 <Login />
             </Route>
+            <Route path="/sign-up">
+                <Register />
+            </Route>
         </Switch>
-        {/*<Login />*/}
         {/*<InfoToolTip/>*/}
-        {/*<Register />*/}
     </CurrentUserContext.Provider>
   );
 }

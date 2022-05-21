@@ -1,4 +1,5 @@
 import headerLogoPath from '../images/header-logo.svg'
+import {withRouter} from "react-router-dom";
 
 const Login = () => {
     return (
@@ -37,4 +38,4 @@ const Login = () => {
     )
 }
 
-export default Login
+export default withRouter(Login)
