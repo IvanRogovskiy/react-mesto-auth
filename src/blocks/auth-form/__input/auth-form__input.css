@@ -6,6 +6,11 @@
     box-sizing: border-box;
     padding-bottom: 13px;
     margin-bottom: 30px;
+    color: #FFF;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 17px;
+    outline: none;
 }
 
 .auth-form__input:last-of-type {

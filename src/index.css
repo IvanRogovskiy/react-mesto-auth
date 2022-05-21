@@ -70,9 +70,15 @@
 @import url(../src/blocks/login-page/login-page.css);
 @import url(../src/blocks/login-page/__btn/login-page__btn.css);
 @import url(../src/blocks/login-page/__header/login-page__header.css);
+
 @import url(../src/blocks/auth-form/auth-form.css);
+@import url(../src/blocks/auth-form/__submit/auth-form__submit.css);
 @import url(../src/blocks/auth-form/__input/auth-form__input.css);
+@import url(../src/blocks/auth-form/__is-registered/auth-form__is-registered.css);
+@import url(../src/blocks/auth-form/__is-registered-login/auth-form__is-registered-login.css);
+@import url(../src/blocks/auth-form/__submit/_type/auth-form__submit_type_login.css);
 
 @import url(../src/blocks/auth-main-container/auth-main-container.css);
 @import url(../src/blocks/auth-main-container/__title/auth-main-container__title.css);
-@import url(../src/blocks/auth-form/__submit/auth-form__submit.css);
+
+@import url(../src/blocks/tooltip/_type/tooltip_type_success.css);

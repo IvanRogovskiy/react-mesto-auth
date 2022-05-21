@@ -7,6 +7,8 @@ import { Switch, Route } from 'react-router-dom';
 import PageContainer from './PageContainer';
 import ProtectedRoute from './ProtectedRoute';
 import Login from './Login';
+import Register from "./Register";
+import InfoToolTip from "./InfoToolTip";
 
 const App = () => {
 
@@ -82,6 +84,7 @@ const App = () => {
 
     const handleCardLike = (card) => {
         const isLiked = card.likes.some(i => i._id === currentUser._id);
+        debugger
         if (!isLiked) {
             api.addLike(card._id)
                 .then((newCard) => {
@@ -135,8 +138,8 @@ const App = () => {
 
   return (
     <CurrentUserContext.Provider value={{currentUser, isLoggedIn}}>
-        {/* <Switch>
-            <ProtectedRoute 
+        <Switch>
+            <ProtectedRoute
                 component={PageContainer}
                 handleEscPress={handleEscPress}
                 handleEditProfileClick={handleEditProfileClick}
@@ -159,8 +162,10 @@ const App = () => {
             <Route path="/login">
                 <Login />
             </Route>
-        </Switch> */}
-        <Login />
+        </Switch>
+        {/*<Login />*/}
+        {/*<InfoToolTip/>*/}
+        {/*<Register />*/}
     </CurrentUserContext.Provider>
   );
 }

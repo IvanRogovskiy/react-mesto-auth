@@ -10,7 +10,7 @@ const Login = () => {
             </header>
             <div className='auth-main-container'>
                 <form className='auth-form'>
-                <p className='auth-main-container__title'>Регистрация</p>
+                <p className='auth-main-container__title'>Вход</p>
                     <input
                         className='auth-form__input auth-form__input_type_email'
                         type='email'
@@ -18,19 +18,18 @@ const Login = () => {
                         name='email'
                         placeholder='Email'
                         required
-                    ></input>
+                    />
                     <input
                         className='auth-form__input auth-form__input_type_password'
-                        type='text'
+                        type='password'
                         id='password'
                         name='password'
                         placeholder='Пароль'
                         required
-                    ></input>
+                    />
                 </form>
                 <div>
-                <input className='auth-form__submit' type="submit" value={"Зарегистрироваться"}/>
-                <p>Уже зарегистрированы?Войти</p>
+                    <input className='auth-form__submit auth-form__submit_type_login' type="submit" value={"Войти"}/>
                 </div>
             </div>
 

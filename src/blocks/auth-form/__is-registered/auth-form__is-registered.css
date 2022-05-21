@@ -1,0 +1,5 @@
+.auth-form__is-registered {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
