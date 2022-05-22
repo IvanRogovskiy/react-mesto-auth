@@ -13,7 +13,7 @@ import InfoToolTip from "./InfoToolTip";
 const App = () => {
 
     const [currentUser, setCurrentUser] = React.useState({});
-    const [isLoggedIn, setIsLoggedIn] = React.useState(true);
+    const [isLoggedIn, setIsLoggedIn] = React.useState(false);
 
     const [cards, setCards] = React.useState([]);
 
@@ -149,6 +149,7 @@ const App = () => {
                 handleAddPlaceClick={handleAddPlaceClick}
                 handleCardClick={handleCardClick}
                 cards={cards}
+                user={currentUser}
                 handleUpdateUser={handleUpdateUser}
                 handleCardLike={handleCardLike}
                 handleCardDelete={handleCardDelete}
@@ -159,7 +160,7 @@ const App = () => {
                 isEditAvatarPopupOpen={isEditAvatarPopupOpen}
                 handleUpdateAvatar={handleUpdateAvatar}
                 selectedCard={selectedCard}
-                loggedIn={true}
+                loggedIn={isLoggedIn}
             />
             <Route path="/sign-in">
                 <Login />

@@ -7,6 +7,9 @@
 
 @import url(../src/blocks/header/header.css);
 @import url(../src/blocks/header/__logo/header__logo.css);
+@import url(../src/blocks/header/__account/header__account.css);
+@import url(../src/blocks/header/__account-email/header__account-email.css);
+@import url(../src/blocks/header/__account-action/header__account-action.css);
 
 @import url(../src/blocks/main/main.css);
 

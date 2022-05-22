@@ -9,7 +9,10 @@ import ImagePopup from "./ImagePopup"
 const PageContainer = (props) => {
     return (
         <div className={'page-container'} onKeyPress={props.handleEscPress}>
-        <Header/>
+        <Header
+            loggedIn={props.loggedIn}
+            currentUser={props.user}
+        />
         <Main
             onEditProfile={props.handleEditProfileClick}
             onEditAvatar={props.handleEditAvatarClick}
