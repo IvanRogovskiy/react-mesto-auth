@@ -1,10 +1,10 @@
 import tooltipErrorPath from '../images/tooltip-error.png'
 import tooltipSuccessPath from '../images/tooltip-success.png'
 
-const InfoToolTip = ({successfully, onClose}) => {
+const InfoToolTip = ({successfully, message, onClose}) => {
 
   const imagePath = successfully ? tooltipSuccessPath : tooltipErrorPath;
-  const message = successfully ? 'Вы успешно зарегистрировались!' : 'Что-то пошло не так! Попробуйте ещё раз.'
+
   return (
       <div className='popup popup_type_edit popup_opened' >
         <div className="popup__container">

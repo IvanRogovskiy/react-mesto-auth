@@ -3,17 +3,18 @@ import React from "react";
 import '../index.css'
 import api from '../utils/Api';
 import { CurrentUserContext } from '../contexts/currentUserContext';
-import {Switch, Route, Redirect, BrowserRouter} from 'react-router-dom';
+import {Switch, Route, withRouter, useHistory} from 'react-router-dom';
 import PageContainer from './PageContainer';
 import ProtectedRoute from './ProtectedRoute';
 import Login from './Login';
 import Register from "./Register";
-import InfoToolTip from "./InfoToolTip";
+import * as auth from "../utils/auth";
 
 const App = () => {
 
     const [currentUser, setCurrentUser] = React.useState({});
     const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+    const history = useHistory()
 
     const [cards, setCards] = React.useState([]);
 
@@ -25,6 +26,10 @@ const App = () => {
         name: "",
         link: ""
     });
+
+    const handleLogin = (isLoggedIn) => {
+      setIsLoggedIn(isLoggedIn)
+    }
 
     const handleEditAvatarClick = () => {
         setIsEditAvatarPopupOpen(true);
@@ -106,6 +111,19 @@ const App = () => {
                 setCards((state) => state.filter((c) => c._id !== card._id))})
             .catch(err => console.log(err))
     }
+    
+    const handleTokenCheck = () => {
+      if (localStorage.getItem('jwt')) {
+          const jwt = localStorage.getItem('jwt');
+          auth.checkToken(jwt)
+              .then(()=> {
+                  setIsLoggedIn(true);
+                  debugger
+                  history.push('/');
+              })
+              .catch(err => console.log(err))
+      }
+    }
 
     React.useEffect(() => {
         api.getMyProfileInfo()
@@ -136,6 +154,8 @@ const App = () => {
         }
     }, [closeAllPopups])
 
+    React.useEffect(handleTokenCheck , [])
+
   return (
     <CurrentUserContext.Provider value={{currentUser, isLoggedIn}}>
         <Switch>
@@ -163,7 +183,7 @@ const App = () => {
                 loggedIn={isLoggedIn}
             />
             <Route path="/sign-in">
-                <Login />
+                <Login onLogin={handleLogin}/>
             </Route>
             <Route path="/sign-up">
                 <Register />
@@ -174,4 +194,4 @@ const App = () => {
   );
 }
 
-export default App;
+export default withRouter(App);

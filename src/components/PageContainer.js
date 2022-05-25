@@ -5,6 +5,7 @@ import AddPlacePopup from "./AddPlacePopup"
 import EditProfilePopup from "./EditProfilePopup"
 import EditAvatarPopup from "./EditAvatarPopup"
 import ImagePopup from "./ImagePopup"
+import {withRouter} from "react-router-dom";
 
 const PageContainer = (props) => {
     return (
@@ -43,4 +44,4 @@ const PageContainer = (props) => {
     )
 }
 
-export default PageContainer
+export default withRouter(PageContainer)

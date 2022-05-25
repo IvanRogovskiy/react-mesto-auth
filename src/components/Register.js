@@ -1,6 +1,6 @@
 import * as auth from '../utils/auth'
 import headerLogoPath from '../images/header-logo.svg'
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import InfoToolTip from "./InfoToolTip";
 import {useHistory} from "react-router-dom";
 
@@ -9,18 +9,22 @@ const Register = () => {
     const [value, setValue] = useState({});
     const [showTooltip, setShowTooltip] = useState(false);
     const [registeredSuccessfully, setRegisteredSuccessfully] = useState(false);
-    const history = useHistory()
+    const [message, setMessage] = useState('');
+    const history = useHistory();
 
     const {email, password} = value;
     const handleSubmit = (e) => {
         e.preventDefault();
         auth.register(email, password)
-            .then((res) => {
+            .then(() => {
                 setShowTooltip(true);
-                if(res.code === 400) {
-                    setRegisteredSuccessfully(false);
-                }
+                setMessage('Вы успешно зарегистрировались!')
                 setRegisteredSuccessfully(true);
+            })
+            .catch((err) => {
+                setRegisteredSuccessfully(false);
+                setMessage(err.message)
+                setShowTooltip(true);
             })
     }
 
@@ -79,7 +83,7 @@ const Register = () => {
                     </div>
                 </form>
             </div>
-            {showTooltip && <InfoToolTip successfully={registeredSuccessfully} onClose={handleTooltipClose}/> }
+            { showTooltip && <InfoToolTip successfully={registeredSuccessfully} message={message} onClose={handleTooltipClose}/> }
         </div>
     )
 }
