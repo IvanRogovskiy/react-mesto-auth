@@ -87,3 +87,7 @@
 @import url(../src/blocks/tooltip/tooltip.css);
 @import url(../src/blocks/tooltip/_type/tooltip_type_success.css);
 @import url(../src/blocks/tooltip/__message/tooltip__message.css);
+
+@import url(../src/blocks/preloader/preloader.css);
+@import url(../src/blocks/preloader/__container/preloader__container.css);
+@import url(../src/blocks/preloader/__round/preloader__round.css);

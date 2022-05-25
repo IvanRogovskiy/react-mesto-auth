@@ -14,8 +14,6 @@ const Login = ({onLogin}) => {
 
     const {email, password} = value;
 
-
-
     const handleSubmit = (e) => {
         e.preventDefault();
         auth.authorize(email, password)

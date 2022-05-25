@@ -9,11 +9,14 @@ import ProtectedRoute from './ProtectedRoute';
 import Login from './Login';
 import Register from "./Register";
 import * as auth from "../utils/auth";
+import Preloader from "./Preloader";
 
 const App = () => {
 
     const [currentUser, setCurrentUser] = React.useState({});
+    const [account, setAccount] = React.useState('')
     const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+    const [isLoading, setIsLoading] = React.useState(true);
     const history = useHistory()
 
     const [cards, setCards] = React.useState([]);
@@ -27,8 +30,11 @@ const App = () => {
         link: ""
     });
 
-    const handleLogin = (isLoggedIn) => {
-      setIsLoggedIn(isLoggedIn)
+    const handleLogin = (loggedIn) => {
+      setIsLoggedIn(loggedIn);
+      if (loggedIn) {
+          history.push('/');
+      }
     }
 
     const handleEditAvatarClick = () => {
@@ -116,12 +122,20 @@ const App = () => {
       if (localStorage.getItem('jwt')) {
           const jwt = localStorage.getItem('jwt');
           auth.checkToken(jwt)
-              .then(()=> {
+              .then(({data})=> {
+                  debugger;
+                  console.log(data.email);
+                  setAccount(data.email)
                   setIsLoggedIn(true);
-                  debugger
                   history.push('/');
+                  setIsLoading(false);
               })
               .catch(err => console.log(err))
+              .finally(() => {
+                  setIsLoading(false)
+              })
+      } else {
+          setIsLoading(false)
       }
     }
 
@@ -154,44 +168,47 @@ const App = () => {
         }
     }, [closeAllPopups])
 
-    React.useEffect(handleTokenCheck , [])
+    React.useEffect(handleTokenCheck, [history])
 
-  return (
-    <CurrentUserContext.Provider value={{currentUser, isLoggedIn}}>
-        <Switch>
-            <ProtectedRoute
-                component={PageContainer}
-                exact
-                path={"/"}
-                handleEscPress={handleEscPress}
-                handleEditProfileClick={handleEditProfileClick}
-                handleEditAvatarClick={handleEditAvatarClick}
-                handleAddPlaceClick={handleAddPlaceClick}
-                handleCardClick={handleCardClick}
-                cards={cards}
-                user={currentUser}
-                handleUpdateUser={handleUpdateUser}
-                handleCardLike={handleCardLike}
-                handleCardDelete={handleCardDelete}
-                isAddPlacePopupOpen={isAddPlacePopupOpen}
-                closeAllPopups={closeAllPopups}
-                handlePlaceAdd={handlePlaceAdd}
-                isEditProfilePopupOpen={isEditProfilePopupOpen}
-                isEditAvatarPopupOpen={isEditAvatarPopupOpen}
-                handleUpdateAvatar={handleUpdateAvatar}
-                selectedCard={selectedCard}
-                loggedIn={isLoggedIn}
-            />
-            <Route path="/sign-in">
-                <Login onLogin={handleLogin}/>
-            </Route>
-            <Route path="/sign-up">
-                <Register />
-            </Route>
-        </Switch>
-        {/*<InfoToolTip/>*/}
-    </CurrentUserContext.Provider>
-  );
-}
+    return (
+      isLoading
+          ? ( <Preloader/> )
+          :
+          ( <CurrentUserContext.Provider value={{currentUser, account, isLoggedIn}}>
+                <Switch>
+                    <ProtectedRoute
+                        component={PageContainer}
+                        exact
+                        path={"/"}
+                        handleEscPress={handleEscPress}
+                        handleEditProfileClick={handleEditProfileClick}
+                        handleEditAvatarClick={handleEditAvatarClick}
+                        handleAddPlaceClick={handleAddPlaceClick}
+                        handleCardClick={handleCardClick}
+                        cards={cards}
+                        user={currentUser}
+                        handleUpdateUser={handleUpdateUser}
+                        handleCardLike={handleCardLike}
+                        handleCardDelete={handleCardDelete}
+                        isAddPlacePopupOpen={isAddPlacePopupOpen}
+                        closeAllPopups={closeAllPopups}
+                        handlePlaceAdd={handlePlaceAdd}
+                        isEditProfilePopupOpen={isEditProfilePopupOpen}
+                        isEditAvatarPopupOpen={isEditAvatarPopupOpen}
+                        handleUpdateAvatar={handleUpdateAvatar}
+                        selectedCard={selectedCard}
+                        loggedIn={isLoggedIn}
+                    />
+                    <Route path="/sign-in">
+                        <Login onLogin={handleLogin}/>
+                    </Route>
+                    <Route path="/sign-up">
+                        <Register/>
+                    </Route>
+                </Switch>
+            </CurrentUserContext.Provider>))
+};
+
 
 export default withRouter(App);
+
