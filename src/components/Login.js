@@ -22,13 +22,12 @@ const Login = ({onLogin}) => {
                 setShowTooltip(true);
                 setMessage('Вы успешно вошли в систему!')
                 setloggedInRegisteredSuccessfully(true);
-                onLogin(true);
+                onLogin();
             })
             .catch((err) => {
                 setloggedInRegisteredSuccessfully(false);
                 setMessage(err.message)
                 setShowTooltip(true);
-                onLogin(false)
             })
     }
 
@@ -48,12 +47,16 @@ const Login = ({onLogin}) => {
         setShowTooltip(false);
     }
 
+    const handleRegisterClick = () => {
+      history.push('/sign-up')
+    }
+
     return (
         <div className="login-page">
             <header className="login-page__header">
                 <img src={headerLogoPath} alt="Логотип в виде надписи MESTO"
                     className="header__logo"/>
-                    <button className="login-page__btn">Регистрация</button>
+                    <button onClick={handleRegisterClick} className="login-page__btn">Регистрация</button>
             </header>
             <div className='auth-main-container'>
                 <form className='auth-form' onSubmit={handleSubmit}>
@@ -76,7 +79,7 @@ const Login = ({onLogin}) => {
                         onChange={handleChange}
                         required
                     />
-                    <div>
+                    <div className='auth-form__ctrl'>
                         <input className='auth-form__submit auth-form__submit_type_login' type="submit" value={"Войти"}/>
                     </div>
                 </form>

@@ -30,11 +30,8 @@ const App = () => {
         link: ""
     });
 
-    const handleLogin = (loggedIn) => {
-      setIsLoggedIn(loggedIn);
-      if (loggedIn) {
-          history.push('/');
-      }
+    const handleLogin = () => {
+        handleTokenCheck();
     }
 
     const handleEditAvatarClick = () => {
@@ -123,11 +120,8 @@ const App = () => {
           const jwt = localStorage.getItem('jwt');
           auth.checkToken(jwt)
               .then(({data})=> {
-                  debugger;
-                  console.log(data.email);
                   setAccount(data.email)
                   setIsLoggedIn(true);
-                  history.push('/');
                   setIsLoading(false);
               })
               .catch(err => console.log(err))

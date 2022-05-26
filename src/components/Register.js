@@ -44,12 +44,16 @@ const Register = () => {
         setShowTooltip(false);
     }
 
+    const handleLoginClick = () => {
+      history.push('/sign-in')
+    }
+
     return (
         <div className="login-page">
             <header className="login-page__header">
                 <img src={headerLogoPath} alt="Логотип в виде надписи MESTO"
                     className="header__logo"/>
-                    <button className="login-page__btn">Войти</button>
+                    <button onClick={handleLoginClick} className="login-page__btn">Войти</button>
             </header>
             <div className='auth-main-container'>
                 <form className='auth-form' onSubmit={handleSubmit}>
@@ -74,11 +78,11 @@ const Register = () => {
                         onChange={handleChange}
                         value={value.password}
                     />
-                    <div>
+                    <div className='auth-form__ctrl'>
                         <input className='auth-form__submit auth-form__submit_type_register' type="submit" value={"Зарегистрироваться"}/>
-                        <div className='auth-form__is-registered'>
-                            <p>Уже зарегистрированы?</p>
-                            <a href='#' className='auth-form__is-registered-login'>Войти</a>
+                        <div className='auth-form__is-registered-container'>
+                            <p className='auth-form__is-registered'>Уже зарегистрированы?</p>
+                            <button onClick={handleLoginClick} className='auth-form__is-registered-login'>Войти</button>
                         </div>
                     </div>
                 </form>
