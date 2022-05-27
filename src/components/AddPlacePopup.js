@@ -1,5 +1,5 @@
 import PopupWithForm from "./PopupWithForm";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 
 const AddPlacePopup = ({isOpened, onAddPlace, onClose}) => {
 
@@ -14,12 +14,31 @@ const AddPlacePopup = ({isOpened, onAddPlace, onClose}) => {
     setLink(e.target.value);
   }
 
+  const clearTextFields = () => {
+      setName('');
+      setLink('');
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
     onAddPlace({name, link});
-    setName('');
-    setLink('');
   }
+
+  useEffect(clearTextFields, [isOpened])
+
+  useEffect(() => {
+    if (!isOpened) return;
+    
+    function handleESC(e) {
+      if (e.key === "Escape") {
+        onClose()
+      }
+    }
+
+    document.addEventListener("keydown", handleESC);
+
+    return () => document.removeEventListener("keydown", handleESC);
+  }, [isOpened]);
 
   return (
       <PopupWithForm

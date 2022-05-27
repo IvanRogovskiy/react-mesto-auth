@@ -29,7 +29,19 @@ const EditProfilePopup = ({isOpened, onClose, onUserUpdate}) => {
       setDescription(currentUser.about || '');
   }, [currentUser, isOpened])
 
-    console.log('name', name)
+  React.useEffect(() => {
+    if (!isOpened) return;
+    
+    function handleESC(e) {
+      if (e.key === "Escape") {
+        onClose()
+      }
+    }
+
+    document.addEventListener("keydown", handleESC);
+
+    return () => document.removeEventListener("keydown", handleESC);
+  }, [isOpened]);
 
   return (
       <PopupWithForm

@@ -15,7 +15,7 @@ const AccountInfo = () => {
   return (
       <>
         <p className='header__account-email'>{value.account}</p>
-        <a href='www.ya.ru' onClick={handleExit} className='header__account-action'>{'Выйти'}</a>
+        <button onClick={handleExit} className='header__account-action'>{'Выйти'}</button>
       </>
   )
 }

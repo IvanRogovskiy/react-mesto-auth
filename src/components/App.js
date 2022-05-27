@@ -1,9 +1,8 @@
 import '../App.css';
 import React from "react";
-import '../index.css'
 import api from '../utils/Api';
 import { CurrentUserContext } from '../contexts/currentUserContext';
-import {Switch, Route, withRouter, useHistory} from 'react-router-dom';
+import {Switch, Route, withRouter, useHistory, Redirect} from 'react-router-dom';
 import PageContainer from './PageContainer';
 import ProtectedRoute from './ProtectedRoute';
 import Login from './Login';
@@ -150,18 +149,6 @@ const App = () => {
             .catch(err => console.log(err))
     }, [])
 
-    React.useEffect(() => {
-        const handleEscPress = (e) => {
-            if (e.key === 'Escape') {
-                closeAllPopups();
-            }
-        }
-        window.addEventListener('keydown', handleEscPress);
-        return () => {
-            window.removeEventListener('keydown', handleEscPress);
-        }
-    }, [closeAllPopups])
-
     React.useEffect(handleTokenCheck, [history])
 
     return (
@@ -198,6 +185,9 @@ const App = () => {
                     </Route>
                     <Route path="/sign-up">
                         <Register/>
+                    </Route>
+                    <Route path="*">
+                       { isLoggedIn ? <Redirect to="/"/> : <Redirect to="/sign-in"/> }
                     </Route>
                 </Switch>
             </CurrentUserContext.Provider>))

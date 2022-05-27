@@ -1,9 +1,8 @@
 import PopupWithForm from "./PopupWithForm";
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 
 const EditAvatarPopup = ({isOpened, onClose, onAvatarUpdate}) => {
-  // const inputRef = useRef();
-
+ 
   const [link, setLink] = useState('');
   const [isValid, setIsValid] = useState(true);
   const [isBtnActive, setBtnActive] = useState(false);
@@ -29,6 +28,20 @@ const EditAvatarPopup = ({isOpened, onClose, onAvatarUpdate}) => {
     onAvatarUpdate(link)
   }
 
+  useEffect(() => {
+    if (!isOpened) return;
+    
+    function handleESC(e) {
+      if (e.key === "Escape") {
+        onClose()
+      }
+    }
+
+    document.addEventListener("keydown", handleESC);
+
+    return () => document.removeEventListener("keydown", handleESC);
+  }, [isOpened]);
+
   return (
       <PopupWithForm
           name='edit'
@@ -42,7 +55,7 @@ const EditAvatarPopup = ({isOpened, onClose, onAvatarUpdate}) => {
                   <input value={link} onChange={handleLinkChange}
                          className={`popup__input popup__input_type_title ${isValid ? '' : 'popup__input_type_error'}`}
                          type="url"
-                         placeholder="Адрес картинки" defaultValue={''}
+                         placeholder="Адрес картинки"
                          required/>
                   <span className={`popup__input-error link-input-error ${isValid ? '' :  'popup__input-error_active'}`}>Please enter a url</span>
                   <input type="submit" className={`popup__save popup__save_avatar-update ${isBtnActive ? '' : 'popup__save_inactive'}`} value={'Сохранить'}/>
