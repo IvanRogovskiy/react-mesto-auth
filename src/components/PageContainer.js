@@ -11,8 +11,7 @@ const PageContainer = (props) => {
     return (
         <div className={'page-container'} onKeyPress={props.handleEscPress}>
         <Header
-            loggedIn={props.loggedIn}
-            currentUser={props.user}
+            logOut={props.handleLogout}
         />
         <Main
             onEditProfile={props.handleEditProfileClick}

@@ -1,4 +1,3 @@
-import '../App.css';
 import React from "react";
 import api from '../utils/Api';
 import { CurrentUserContext } from '../contexts/currentUserContext';
@@ -9,6 +8,7 @@ import Login from './Login';
 import Register from "./Register";
 import * as auth from "../utils/auth";
 import Preloader from "./Preloader";
+import InfoToolTip from './InfoToolTip';
 
 const App = () => {
 
@@ -16,6 +16,11 @@ const App = () => {
     const [account, setAccount] = React.useState('')
     const [isLoggedIn, setIsLoggedIn] = React.useState(false);
     const [isLoading, setIsLoading] = React.useState(true);
+    const [showTooltip, setShowTooltip] = React.useState(false);
+    const [message, setMessage] = React.useState('');
+
+    const [successfully, setSuccessfully] = React.useState(true);
+
     const history = useHistory()
 
     const [cards, setCards] = React.useState([]);
@@ -29,8 +34,41 @@ const App = () => {
         link: ""
     });
 
-    const handleLogin = () => {
-        handleTokenCheck();
+    const handleLogin = (email, password) => {
+        auth.authorize(email, password)
+        .then(() => {
+            handleTokenCheck();
+            setIsLoggedIn(true);
+            setShowTooltip(true);
+            setMessage('Вы успешно вошли в систему!')
+            setSuccessfully(true);
+        })
+        .catch((err) => {
+            setIsLoggedIn(false);
+            setMessage(err.message)
+            setShowTooltip(true);
+            setSuccessfully(false);
+        })
+    }
+
+    const handleLogout = () => {
+        setIsLoggedIn(false);
+        localStorage.removeItem('jwt');
+        history.push('/sign-in');
+    }
+
+    const handleRegister = (email, password) => {
+        auth.register(email, password)
+        .then(() => {
+            setMessage('Вы успешно зарегистрировались!');
+            setSuccessfully(true);
+            setShowTooltip(true);
+        })
+        .catch((err) => {
+            setMessage(err.message);
+            setSuccessfully(false);
+            setShowTooltip(true);
+        })
     }
 
     const handleEditAvatarClick = () => {
@@ -69,7 +107,7 @@ const App = () => {
     const handleUpdateUser = ({name, about}) => {
       api.updateUserInfo({name, about})
           .then(data => setCurrentUser({currentUser, ...data}))
-          .catch(err => console.log(err))
+          .catch(err => console.log(err)) 
       closeAllPopups();
     }
 
@@ -91,7 +129,6 @@ const App = () => {
 
     const handleCardLike = (card) => {
         const isLiked = card.likes.some(i => i._id === currentUser._id);
-        debugger
         if (!isLiked) {
             api.addLike(card._id)
                 .then((newCard) => {
@@ -104,7 +141,6 @@ const App = () => {
                     setCards((state) => state.map((c) => c._id === card._id ? newCard : c))})
                 .catch(err => console.log(err))
         }
-
     }
 
     const handleCardDelete = (card) => {
@@ -132,10 +168,20 @@ const App = () => {
       }
     }
 
+
+    const handleTooltipClose = () => {
+        debugger
+        if (isLoggedIn) {
+            history.push('/');
+        } else {
+            history.push('/sign-in');
+        }
+        setShowTooltip(false);
+    }
+
     React.useEffect(() => {
         api.getMyProfileInfo()
             .then((userData) => {
-                console.log(userData);
                 setCurrentUser(userData)
             })
             .catch(err => console.log(err))
@@ -178,21 +224,20 @@ const App = () => {
                         isEditAvatarPopupOpen={isEditAvatarPopupOpen}
                         handleUpdateAvatar={handleUpdateAvatar}
                         selectedCard={selectedCard}
+                        handleLogout = {handleLogout}
                         loggedIn={isLoggedIn}
                     />
                     <Route path="/sign-in">
                         <Login onLogin={handleLogin}/>
                     </Route>
                     <Route path="/sign-up">
-                        <Register/>
+                        <Register onRegister={handleRegister}/>
                     </Route>
                     <Route path="*">
                        { isLoggedIn ? <Redirect to="/"/> : <Redirect to="/sign-in"/> }
                     </Route>
                 </Switch>
+                { showTooltip && <InfoToolTip successfully={successfully} message={message} onClose={handleTooltipClose}/> }
             </CurrentUserContext.Provider>))
 };
-
-
 export default withRouter(App);
-

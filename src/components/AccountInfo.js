@@ -1,15 +1,12 @@
-import {useHistory} from "react-router-dom";
 import {useContext} from 'react';
 import {CurrentUserContext} from "../contexts/currentUserContext";
 
-const AccountInfo = () => {
-  const history = useHistory();
+const AccountInfo = ({onProfileLogout}) => {
   const value = useContext(CurrentUserContext);
 
   const handleExit = (e) => {
     e.preventDefault()
-    localStorage.removeItem('jwt');
-    history.push('/sign-in')
+    onProfileLogout();
   }
 
   return (

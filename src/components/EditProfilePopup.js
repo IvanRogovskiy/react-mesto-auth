@@ -6,7 +6,7 @@ const EditProfilePopup = ({isOpened, onClose, onUserUpdate}) => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
 
-  const currentUser = React.useContext(CurrentUserContext);
+  const { currentUser } = React.useContext(CurrentUserContext);
 
   const onNameChange = (e) => {
     setName(e.target.value)
